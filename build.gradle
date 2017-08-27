@@ -1,0 +1,21 @@
+plugins {
+  id 'java'
+  id 'eclipse'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.13'
+	compile group: 'com.typesafe.akka', name: 'akka-actor_2.11', version: '2.5.4'
+	compile group: 'com.typesafe.akka', name: 'akka-stream-experimental_2.10', version: '2.0.5'
+	compile group: 'org.springframework', name: 'spring-beans', version: '4.3.10.RELEASE'
+	compile group: 'org.springframework', name: 'spring-context', version: '4.3.10.RELEASE'
+	compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.6'
+	compile group: 'org.twitter4j', name: 'twitter4j-stream', version: '4.0.6'
+	compile 'org.projectlombok:lombok:1.16.8'
+	
+    testCompile 'junit:junit:4.12'
+}
