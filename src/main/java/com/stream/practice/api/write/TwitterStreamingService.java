@@ -2,9 +2,10 @@ package com.stream.practice.api.write;
 
 import static akka.stream.javadsl.Sink.actorRef;
 import static com.stream.practice.twitter.utils.SpringExtension.SpringExtProvider;
+import static java.lang.Runtime.getRuntime;
+import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -16,8 +17,6 @@ import com.stream.practice.twitter.utils.TwitterAPIConfiguration;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.stream.Materializer;
-import akka.stream.javadsl.Source;
-import scala.runtime.BoxedUnit;
 
 @Service
 public class TwitterStreamingService {
@@ -43,8 +42,14 @@ public class TwitterStreamingService {
   
   public void start() {
     createActors();
-    Source<Tweet,BoxedUnit> sourceOfTweets = twitterStreamClient.listenAndStream(new ArrayList<String>(Arrays.asList("akka")));
-    sourceOfTweets.runWith(actorRef(streamingTweetActor, Tweet.EmptyTweet()), actorMaterializer);
+    
+    getRuntime().addShutdownHook(new Thread(() -> {
+      context.close();
+    }));
+    
+    twitterStreamClient
+    .listenAndStream(new ArrayList<String>(asList("akka")))
+    .runWith(actorRef(streamingTweetActor, Tweet.EmptyTweet()), actorMaterializer);
   }
   
   public void createActors() {

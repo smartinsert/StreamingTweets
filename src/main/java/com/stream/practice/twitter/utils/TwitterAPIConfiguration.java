@@ -18,7 +18,6 @@ import akka.stream.ActorMaterializer;
 import akka.stream.Materializer;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
-import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 @Configuration
@@ -33,15 +32,22 @@ public class TwitterAPIConfiguration {
   
   @Bean
   public TwitterStreamFactory twitterStreamingFactory() {
-    return new TwitterStreamFactory(new ConfigurationBuilder().build());
+    return new TwitterStreamFactory(configuration().build());
   }
   
   @Bean
   public TwitterStream twitterStream() throws IOException {
-    TwitterStream twitterStream = twitterStreamingFactory().getInstance();
-    twitterStream.setOAuthAccessToken(new AccessToken(twitterProperties.getAccessToken(), twitterProperties.getAccessTokenSecret()));
-    twitterStream.setOAuthConsumer(twitterProperties.getConsumerApiKey(), twitterProperties.getConsumerApiSecret());
-    return twitterStream;
+    return twitterStreamingFactory().getInstance();
+  }
+
+  @Bean
+  public ConfigurationBuilder configuration() {
+    ConfigurationBuilder configuration = new ConfigurationBuilder();
+    configuration.setOAuthConsumerKey(twitterProperties.getConsumerApiKey());
+    configuration.setOAuthConsumerSecret(twitterProperties.getConsumerApiSecret());
+    configuration.setOAuthAccessToken(twitterProperties.getAccessToken());
+    configuration.setOAuthAccessTokenSecret(twitterProperties.getAccessTokenSecret());
+    return configuration;
   }
 
   @Bean

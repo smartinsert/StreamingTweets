@@ -5,8 +5,6 @@ import static java.util.Arrays.asList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -14,7 +12,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-@Service("Tweet")
 public class Tweet {
   private final Author author;
   private final long timestamp;

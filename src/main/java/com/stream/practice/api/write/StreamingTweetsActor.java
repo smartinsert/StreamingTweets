@@ -9,7 +9,7 @@ import com.stream.practice.domain.Tweet;
 import akka.actor.AbstractActor;
 import akka.japi.pf.ReceiveBuilder;
 
-@Service
+@Service("StreamingTweetsActor")
 @Scope("prototype")
 public class StreamingTweetsActor extends AbstractActor {
 
