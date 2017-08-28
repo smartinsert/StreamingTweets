@@ -39,8 +39,8 @@ public class TwitterAPIConfiguration {
   @Bean
   public TwitterStream twitterStream() throws IOException {
     TwitterStream twitterStream = twitterStreamingFactory().getInstance();
-    twitterStream.setOAuthAccessToken(new AccessToken(twitterProperties.accessToken(), twitterProperties.accessTokenSecret()));
-    twitterStream.setOAuthConsumer(twitterProperties.consumerAPIKey(), twitterProperties.consumerAPISecret());
+    twitterStream.setOAuthAccessToken(new AccessToken(twitterProperties.getAccessToken(), twitterProperties.getAccessTokenSecret()));
+    twitterStream.setOAuthConsumer(twitterProperties.getConsumerApiKey(), twitterProperties.getConsumerApiSecret());
     return twitterStream;
   }
 

@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @Getter
+@ToString
 @Service("Tweet")
 public class Tweet {
   private final Author author;

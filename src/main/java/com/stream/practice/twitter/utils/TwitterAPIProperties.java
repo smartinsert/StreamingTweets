@@ -1,38 +1,27 @@
 package com.stream.practice.twitter.utils;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import lombok.Getter;
 
 @Service
 public class TwitterAPIProperties {
   
-  @Autowired
-  private Properties properties;
+  @Getter
+  @Value("${access.token}")
+  private String accessToken;
   
-  public String consumerAPIKey() throws IOException {
-    return property("consumer.api.key").toString();
-  }
+  @Getter
+  @Value("${access.token.secret}")
+  private String accessTokenSecret;
   
-  public String consumerAPISecret() throws IOException {
-    return property("consumer.api.secret").toString();
-  }
+  @Getter
+  @Value("${consumer.api.key}")
+  private String consumerApiKey;
   
-  public String accessToken() throws IOException {
-    return property("access.token").toString();
-  }
+  @Getter
+  @Value("${consumer.api.secret}")
+  private String consumerApiSecret;
   
-  public String accessTokenSecret() throws IOException {
-    return property("access.token.secret").toString();
-  }
-  
-  private Object property(String key) throws IOException {
-    String value = System.getProperty(key);
-    if (value != null)
-      return value;
-
-    return properties.getProperty(key);
-  }
 }
