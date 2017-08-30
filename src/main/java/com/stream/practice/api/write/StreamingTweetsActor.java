@@ -6,21 +6,18 @@ import org.springframework.stereotype.Service;
 
 import com.stream.practice.domain.Tweet;
 
-import akka.actor.AbstractActor;
-import akka.japi.pf.ReceiveBuilder;
+import akka.actor.UntypedAbstractActor;
 
 @Service("StreamingTweetsActor")
 @Scope("prototype")
-public class StreamingTweetsActor extends AbstractActor {
+public class StreamingTweetsActor extends UntypedAbstractActor {
 
   @Override
-  public Receive createReceive() {
-    return ReceiveBuilder.create()
-        .match(Tweet.class, command -> {
-          Tweet tweet = (Tweet) command;
-          System.out.println("Received tweet " + tweet);
-        }).build();
+  public void onReceive(Object message) throws Throwable {
+    if (message instanceof Tweet) {
+      Tweet tweet = (Tweet) message;
+      System.out.println("Received tweet " + tweet);
+    }
   }
-  
   
 }
